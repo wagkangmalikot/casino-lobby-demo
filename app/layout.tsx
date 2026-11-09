@@ -20,7 +20,7 @@ const interDisplay = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Bituin Play — Casino Lobby Demo",
+  title: "AstraSpin — Casino Lobby Demo",
   description:
     "A portfolio demo of a casino game lobby, wallet and deposit flow built with Next.js, React Query and Tailwind CSS. No real money.",
 };

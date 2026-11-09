@@ -14,7 +14,7 @@ export function useDebounced<T>(value: T, delay = 300): T {
 }
 
 // Favorites saved in localStorage, shared by every component that uses the hook.
-const FAV_KEY = "bituin-demo-favorites";
+const FAV_KEY = "astraspin-demo-favorites";
 const listeners = new Set<() => void>();
 let cache: string[] | null = null;
 const EMPTY: string[] = [];

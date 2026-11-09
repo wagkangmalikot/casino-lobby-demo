@@ -188,7 +188,7 @@ export function PhaserSlot() {
           <div className="absolute inset-0 grid place-items-center">
             <div className="text-center">
               <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-gold-400/30 border-t-gold-400" />
-              <p className="mt-3 text-sm text-slate-300">Loading Carabao Gold…</p>
+              <p className="mt-3 text-sm text-slate-300">Loading Golden Ox…</p>
             </div>
           </div>
         )}

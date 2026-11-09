@@ -1,4 +1,4 @@
-# How Bituin Play works
+# How AstraSpin works
 
 A plain-language walkthrough of the code, so you can explain every part of it in an interview.
 Read it top to bottom once, then open each file it mentions.
@@ -7,7 +7,7 @@ Read it top to bottom once, then open each file it mentions.
 
 ## 1. The big picture
 
-Bituin Play is a casino lobby demo. There is no real server. Instead, `lib/api.ts` pretends to be one:
+AstraSpin is a casino lobby demo. There is no real server. Instead, `lib/api.ts` pretends to be one:
 each function waits a few hundred milliseconds and then returns data, just like a network call.
 
 ```
@@ -117,7 +117,7 @@ includes playable slots. Being upfront about that is better than opening the wro
 
 ---
 
-## 6b. The featured Phaser slot (Carabao Gold Deluxe)
+## 6b. The featured Phaser slot (Golden Ox Deluxe)
 
 The featured game is a real 5-reel, 3-row, 10-line slot built with **Phaser 3**, the same engine used for
 HTML5 casino games. It's split into three layers, each with one job:

@@ -249,11 +249,11 @@ export function createSlotScene(Phaser: PhaserLib, onReady: (api: SlotSceneApi) 
         ctx.lineJoin = "round";
         ctx.lineWidth = 12;
         ctx.strokeStyle = "#2b0f00";
-        ctx.strokeText("CARABAO GOLD", 310, 30);
+        ctx.strokeText("GOLDEN OX", 310, 30);
         ctx.shadowColor = "rgba(251,191,36,0.55)";
         ctx.shadowBlur = 18;
         ctx.fillStyle = g;
-        ctx.fillText("CARABAO GOLD", 310, 30);
+        ctx.fillText("GOLDEN OX", 310, 30);
         ctx.shadowBlur = 0;
         // "DELUXE" ribbon
         ctx.fillStyle = "#be123c";

@@ -14,7 +14,7 @@ export function Header({ onDeposit }: { onDeposit: () => void }) {
             <path d="M16 2l3.6 9.2L29 12l-7.4 6.1L24 28l-8-5.4L8 28l2.4-9.9L3 12l9.4-.8z" fill="#fbbf24" />
           </svg>
           <span className="font-display text-lg font-bold tracking-tight text-white">
-            Bituin<span className="text-gold-400">Play</span>
+            Astra<span className="text-gold-400">Spin</span>
           </span>
           <span className="ml-1 hidden rounded bg-white/10 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-300 sm:inline">Demo</span>
         </a>

@@ -69,15 +69,15 @@ export function SmallSymbol({ set, s }: { set: IconSet; s: ReelSymbol }) {
 }
 
 const GAME_SETS: Record<string, IconSet> = {
-  "golden-carabao": "gems",
+  "golden-ox": "gems",
   "lucky-lantern": "gems",
   "volcano-gold": "gems",
   "starlight-bay": "gems",
-  "pearl-of-palawan": "nature",
+  "pearl-lagoon": "nature",
   "typhoon-reels": "nature",
   "mango-madness": "nature",
   "coral-kingdom": "nature",
-  "rice-terrace-riches": "nature",
+  "jade-terrace": "nature",
 };
 
 export const iconSetFor = (gameId: string): IconSet => GAME_SETS[gameId] ?? "classic";

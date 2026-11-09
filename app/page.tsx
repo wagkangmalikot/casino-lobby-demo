@@ -191,7 +191,7 @@ export default function Lobby() {
       </main>
 
       <footer className="border-t border-white/5 py-8 text-center text-xs leading-relaxed text-slate-500">
-        <p>Bituin Play is a portfolio demo by Alfie Deligero. All games, studios and the brand are original and made up; they are not real casino products. No real money is used.</p>
+        <p>AstraSpin is a portfolio demo by Alfie Deligero. All games, studios and the brand are original and made up; they are not real casino products. No real money is used.</p>
         <p className="mt-1">
           Built with Next.js, React Query and Tailwind CSS ·{" "}
           <a href="https://alfie-deligero.vercel.app" className="text-slate-300 underline-offset-2 hover:underline">

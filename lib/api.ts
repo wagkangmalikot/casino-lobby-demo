@@ -7,7 +7,7 @@ import { games, providers } from "./games";
 import { evaluateGrid, PAYLINES, randomGrid, type Grid, type LineWin } from "./slot5/engine";
 import type { DepositRequest, DepositResult, Game, GameFilters, SpinResult, ReelSymbol, Wallet } from "./types";
 
-const WALLET_KEY = "bituin-demo-wallet";
+const WALLET_KEY = "astraspin-demo-wallet";
 const STARTING_WALLET: Wallet = { balance: 500, bonus: 0 };
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
