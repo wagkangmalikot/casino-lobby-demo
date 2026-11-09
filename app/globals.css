@@ -56,6 +56,16 @@ body {
 }
 .slide-up { animation: slide-up 0.25s ease-out both; }
 
+/* Row of chasing marquee bulbs, used on the simple slot cabinets */
+.marquee-lights {
+  background-image: radial-gradient(circle, #fff7c2 0 2px, #fbbf24 3px, transparent 4.5px);
+  background-size: 18px 10px;
+  background-position: 0 center;
+  animation: marquee 0.9s steps(3) infinite;
+  opacity: 0.9;
+}
+@keyframes marquee { to { background-position: 18px center; } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
 }

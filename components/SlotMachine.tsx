@@ -61,11 +61,18 @@ export function SlotMachine({ game }: { game: Game }) {
   };
 
   return (
-    <div className="rounded-2xl p-4 ring-1 ring-white/10 sm:p-6" style={{ background: `linear-gradient(160deg, ${c1}55 0%, #0d1426 45%, #070b16 100%)` }}>
-      <p className="mb-3 text-center font-display text-sm font-bold uppercase tracking-[0.2em] text-white/80">{game.name}</p>
-      <div className="grid grid-cols-3 gap-2 rounded-xl p-2 sm:gap-3 sm:p-3" style={{ background: `linear-gradient(180deg, ${c1}, ${c2})`, boxShadow: `0 0 0 1px ${c1}80, 0 10px 40px -10px ${c1}` }}>
+    <div className="rounded-2xl p-4 ring-1 ring-white/10 sm:p-6" style={{ background: `radial-gradient(120% 80% at 50% 0%, ${c1}66 0%, #120a24 55%, #070b16 100%)` }}>
+      <div className="mb-3 text-center">
+        <p className="bg-gradient-to-b from-[#fff7c2] via-gold-400 to-amber-700 bg-clip-text font-display text-2xl font-bold uppercase leading-tight tracking-wide text-transparent drop-shadow-[0_2px_10px_rgba(251,191,36,0.35)] sm:text-3xl">
+          {game.name}
+        </p>
+        <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/50">{game.provider}</p>
+      </div>
+      <div className="marquee-lights mb-2 h-2.5 rounded-full" aria-hidden="true" />
+      <div className="grid grid-cols-3 gap-2 rounded-xl p-2 sm:gap-3 sm:p-3" style={{ background: `linear-gradient(180deg, ${c1}, ${c2})`, boxShadow: `0 0 0 3px #fbbf2499, 0 0 0 1px ${c1}80, 0 10px 40px -10px ${c1}` }}>
         {reels.map((s, i) => (
           <div key={i} className="relative h-28 overflow-hidden rounded-lg bg-gradient-to-b from-slate-100 to-slate-300 sm:h-32" aria-label={spinning[i] ? "Spinning" : s}>
+            <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-black/30 via-transparent to-black/30" aria-hidden="true" />
             {spinning[i] ? (
               <div className="reel-spinning flex flex-col items-center">
                 {[...ORDER, ...ORDER].map((x, k) => (
@@ -82,6 +89,8 @@ export function SlotMachine({ game }: { game: Game }) {
           </div>
         ))}
       </div>
+
+      <div className="marquee-lights mt-2 h-2.5 rounded-full" aria-hidden="true" />
 
       <div className="mt-3 h-8 text-center" aria-live="polite">
         {lastWin !== null &&
@@ -113,9 +122,13 @@ export function SlotMachine({ game }: { game: Game }) {
           type="button"
           onClick={play}
           disabled={busy || total < bet}
-          className="rounded-xl bg-gradient-to-b from-gold-300 to-gold-500 px-10 py-3.5 font-display text-lg font-bold text-night-950 shadow-lg shadow-gold-500/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+          aria-label={busy ? "Spinning" : "SPIN"}
+          className="group mx-auto grid h-20 w-20 place-items-center rounded-full bg-[radial-gradient(circle_at_35%_30%,#fff7c2,#fbbf24_45%,#b45309)] shadow-[0_0_0_4px_rgba(251,191,36,0.25),0_10px_30px_-6px_rgba(245,165,36,0.7)] transition hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:mx-0"
         >
-          {busy ? "Spinning…" : "SPIN"}
+          <svg viewBox="0 0 48 48" className={`h-9 w-9 text-[#3b1300] ${busy ? "animate-spin" : "transition group-hover:rotate-45"}`} fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M40 24a16 16 0 0 1-27.3 11.3M8 24A16 16 0 0 1 35.3 12.7" />
+            <path d="M36 4v9h-9M12 44v-9h9" />
+          </svg>
         </button>
       </div>
       {total < bet && !busy && <p className="mt-3 text-center text-sm text-rose-300">Not enough balance for this bet. Make a deposit to keep playing.</p>}

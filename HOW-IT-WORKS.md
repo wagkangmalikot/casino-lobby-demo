@@ -103,6 +103,10 @@ Why not just `useState`? Two reasons:
 The **result is decided by the "server" (the API), not by the animation.** The UI only displays it.
 That mirrors how real casino games work, and it's a good point to make in an interview.
 
+**Names and studios.** Every game and studio is original but written in casino-industry style
+("Reelforge Studios", "Ace Dynasty Live", "Lucky Lantern 888"). Each game also has a volatility rating, and slots list their
+real maximum win. Real provider names and well-known game titles are avoided on purpose: they're trademarks.
+
 **Each slot has its own look.** `components/SlotSymbols.tsx` has three symbol sets (classic, gems, nature)
 drawn as inline SVG. `iconSetFor(game.id)` picks the set, and the reel frame uses the game's own colors.
 The API still returns the same five symbol ranks for every game; the set only changes how they're drawn.
@@ -113,7 +117,7 @@ includes playable slots. Being upfront about that is better than opening the wro
 
 ---
 
-## 6b. The featured Phaser slot (Golden Carabao Deluxe)
+## 6b. The featured Phaser slot (Carabao Gold Deluxe)
 
 The featured game is a real 5-reel, 3-row, 10-line slot built with **Phaser 3**, the same engine used for
 HTML5 casino games. It's split into three layers, each with one job:
@@ -148,8 +152,20 @@ Before spinning, `this.tweens.killTweensOf(container)` stops the little wind-up 
 spin would fight over the same `y` value and the reel would stutter. That was a real bug on the 5th reel, which starts
 its wind-up last. **Two tweens on the same property** is a classic Phaser mistake and a good debugging story for an interview.
 
-**All art is generated in code.** `makeTextures()` draws each symbol with Phaser Graphics and text, then saves it
-as a texture. There are no image files to load.
+**All art is generated in code.** `makeTextures()` uses the browser's Canvas 2D API (gradients, glows, shadows, text)
+through `this.textures.createCanvas()`, then Phaser uses each canvas as a texture. That covers the background, the
+gold cabinet frame, the logo, the marquee bulbs and all nine symbols. There are no image files to load.
+
+**Symbols follow real slot conventions:** high-value pictures (Wild, 7, Gem, Coin, Bell) plus A, K, Q and J card symbols,
+which are common and pay small amounts. The marquee bulbs around the cabinet "chase" using a Phaser timer that
+changes each bulb's brightness every 140 ms.
+
+**Turbo and Auto.** Turbo raises the reel speed and shortens the stagger between reels. Auto-spin is a counter in React:
+when a spin finishes and the counter is above zero, a `useEffect` starts the next spin. It stops when the counter hits zero,
+when you press Stop, or when the balance can't cover the bet. The game logic doesn't change at all.
+
+**The canvas font.** Canvas text can't use CSS classes, so `PhaserSlot.tsx` waits for `document.fonts.ready`, reads the
+page's font name from the `--font-inter-display` CSS variable, and passes it into the scene.
 
 **Why Phaser is loaded inside `useEffect`.** Phaser needs `window`, which doesn't exist while Next.js builds the page.
 So `PhaserSlot.tsx` does `await import("phaser")` in the browser only, and `createSlotScene.ts` uses
@@ -157,7 +173,7 @@ So `PhaserSlot.tsx` does `await import("phaser")` in the browser only, and `crea
 
 **The maths.** Wins pay left to right, as a multiple of the line bet. Wild stands in for every symbol, and a line
 of wilds pays as wilds if that's worth more. Run `npm run simulate` to play a million spins: the long-run payout (RTP)
-is about **95.5%** and about half of all spins win something. Real slots land in the same range, and being able to
+is about **95.8%**, about 31% of spins win something, and the top prize is 1,300× the total bet (five Wilds on all 10 lines). Real slots land in the same range, and being able to
 show the number with a script is a strong interview point.
 
 **Likely interview question:** *"How do you know the game pays fairly?"*

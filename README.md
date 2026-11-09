@@ -8,12 +8,13 @@ Built with **Next.js 16, React 19, TypeScript, React Query, Phaser and Tailwind 
 
 ## Features
 
-- Game lobby with category tabs, debounced search, provider filter and favorites
+- Game lobby with category tabs, debounced search, a Studios row, provider filter and favorites
+- Original casino-style games and studios with RTP, volatility and max win
 - Skeleton loading, empty and error states
 - Live wallet balance (real + bonus) in the header
 - Deposit modal: payment methods, amount presets, validation, promo codes with live bonus preview
-- **Golden Carabao Deluxe**: a 5-reel, 10-line Phaser slot with wilds, animated reels, win lines and a big-win effect (about 95.5% RTP, checked with `npm run simulate`)
-- 11 more playable slots, each with its own symbols and colors
+- **Carabao Gold Deluxe**: a 5-reel, 10-line Phaser slot with a gold cabinet, chasing marquee lights, A-K-Q-J and picture symbols, Wilds, win lines with a win counter, a big-win effect, Turbo and Auto-spin (about 95.8% RTP, checked with `npm run simulate`)
+- 11 more playable slots in themed cabinets, each with its own symbols and colors
 - Bets deducted from the wallet (bonus spent first), wins paid back
 - Table, live and fishing games listed as "Coming soon"
 - Wallet and favorites saved in the browser, so they survive a refresh

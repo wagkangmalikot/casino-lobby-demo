@@ -1,23 +1,27 @@
 // Slot maths for the 5-reel Phaser game. Pure functions, no React or Phaser,
 // so the rules can be read, tested and reused on their own.
 
-export type Sym = "wild" | "seven" | "gem" | "coin" | "bell" | "cherry";
-export const SYMBOLS: Sym[] = ["wild", "seven", "gem", "coin", "bell", "cherry"];
+// High-value picture symbols, then the A K Q J card symbols most video slots use for small wins.
+export type Sym = "wild" | "seven" | "gem" | "coin" | "bell" | "ace" | "king" | "queen" | "jack";
+export const SYMBOLS: Sym[] = ["wild", "seven", "gem", "coin", "bell", "ace", "king", "queen", "jack"];
 
 export const REELS = 5;
 export const ROWS = 3;
 
 // How often each symbol appears on a reel strip (higher = more common).
-const WEIGHTS: Record<Sym, number> = { cherry: 8, bell: 7, coin: 6, gem: 5, seven: 3, wild: 2 };
+const WEIGHTS: Record<Sym, number> = { jack: 9, queen: 8, king: 7, ace: 6, bell: 5, coin: 4, gem: 3, seven: 2, wild: 2 };
 
 // Pay for 3, 4 or 5 in a row, as a multiple of the line bet.
 export const PAYTABLE: Record<Sym, [number, number, number]> = {
-  wild: [30, 110, 350],
-  seven: [14, 55, 200],
-  gem: [8, 35, 110],
-  coin: [7, 20, 70],
-  bell: [4, 14, 40],
-  cherry: [3, 7, 20],
+  wild: [100, 400, 1300],
+  seven: [65, 260, 1000],
+  gem: [40, 130, 500],
+  coin: [30, 100, 400],
+  bell: [25, 80, 250],
+  ace: [16, 40, 130],
+  king: [14, 30, 100],
+  queen: [10, 25, 80],
+  jack: [8, 20, 65],
 };
 
 // 10 paylines. Each number is the row (0 = top, 1 = middle, 2 = bottom) on reels 1–5.

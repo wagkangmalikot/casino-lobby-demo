@@ -5,7 +5,7 @@ import { DepositModal } from "@/components/DepositModal";
 import { GameCard, GameCardSkeleton } from "@/components/GameCard";
 import { GameModal } from "@/components/GameModal";
 import { Header } from "@/components/Header";
-import { categoryLabels } from "@/lib/games";
+import { categoryLabels, games as catalogue, providerTaglines, providers as allProviders } from "@/lib/games";
 import { useDebounced, useFavorites } from "@/lib/hooks";
 import { useGames, useProviders } from "@/lib/queries";
 import type { Game, GameFilters } from "@/lib/types";
@@ -63,6 +63,33 @@ export default function Lobby() {
           >
             Claim bonus
           </button>
+        </section>
+
+        {/* Studios */}
+        <section className="mt-8" aria-label="Game studios">
+          <h2 className="mb-3 font-display text-lg font-bold text-white">Studios</h2>
+          <div className="no-scrollbar -mx-4 flex gap-3 overflow-x-auto px-4 sm:mx-0 sm:grid sm:grid-cols-5 sm:px-0">
+            {allProviders.map((p) => {
+              const count = catalogue.filter((g) => g.provider === p).length;
+              const active = provider === p;
+              return (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() => {
+                    setProvider(active ? "" : p);
+                    setCategory("all");
+                  }}
+                  aria-pressed={active}
+                  className={`w-52 shrink-0 rounded-2xl p-4 text-left ring-1 transition sm:w-auto ${active ? "bg-gold-400/10 ring-gold-400" : "bg-night-800 ring-white/5 hover:ring-white/20"}`}
+                >
+                  <p className="font-display font-bold text-white">{p}</p>
+                  <p className="mt-0.5 text-xs text-slate-400">{providerTaglines[p]}</p>
+                  <p className="mt-3 text-xs font-semibold text-gold-400">{count} games</p>
+                </button>
+              );
+            })}
+          </div>
         </section>
 
         {/* Filters */}
@@ -164,7 +191,7 @@ export default function Lobby() {
       </main>
 
       <footer className="border-t border-white/5 py-8 text-center text-xs leading-relaxed text-slate-500">
-        <p>Bituin Play is a portfolio demo by Alfie Deligero. Games, studios and brand are made up. No real money is used.</p>
+        <p>Bituin Play is a portfolio demo by Alfie Deligero. All games, studios and the brand are original and made up; they are not real casino products. No real money is used.</p>
         <p className="mt-1">
           Built with Next.js, React Query and Tailwind CSS ·{" "}
           <a href="https://alfie-deligero.vercel.app" className="text-slate-300 underline-offset-2 hover:underline">

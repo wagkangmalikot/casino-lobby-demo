@@ -9,6 +9,8 @@ import { Modal } from "./Modal";
 import { PhaserSlot } from "./PhaserSlot";
 import { SlotMachine } from "./SlotMachine";
 
+const volatilityColor = { Low: "text-emerald-300", Medium: "text-amber-300", High: "text-rose-300" } as const;
+
 export function GameModal({ game, onClose }: { game: Game | null; onClose: () => void }) {
   const [playing, setPlaying] = useState(false);
   const [launching, setLaunching] = useState(false);
@@ -51,22 +53,23 @@ export function GameModal({ game, onClose }: { game: Game | null; onClose: () =>
             </div>
             <div className="flex flex-col">
               <p className="text-sm text-slate-400">{game.provider}</p>
-              <dl className="mt-4 grid grid-cols-3 gap-2 text-center">
+              <dl className="mt-4 grid grid-cols-2 gap-2 text-center sm:grid-cols-4">
                 {[
                   ["Type", categoryLabels[game.category]],
                   ["RTP", `${game.rtp}%`],
-                  ["Min bet", pesoShort(game.minBet)],
+                  ["Volatility", game.volatility],
+                  game.maxWin ? ["Max win", `${game.maxWin.toLocaleString()}×`] : ["Min bet", pesoShort(game.minBet)],
                 ].map(([k, v]) => (
                   <div key={k} className="rounded-xl bg-night-800 px-2 py-3 ring-1 ring-white/5">
                     <dt className="text-[11px] uppercase tracking-wider text-slate-500">{k}</dt>
-                    <dd className="mt-1 text-sm font-semibold text-white">{v}</dd>
+                    <dd className={`mt-1 text-sm font-semibold ${k === "Volatility" ? volatilityColor[game.volatility] : "text-white"}`}>{v}</dd>
                   </div>
                 ))}
               </dl>
               {playable ? (
                 <p className="mt-4 text-sm leading-relaxed text-slate-300">
                   {game.engine === "phaser"
-                    ? "The featured game: a 5-reel, 10-line slot built with Phaser, with wilds, animated reels and win lines."
+                    ? "Our featured original: a 5-reel, 10-line slot built with Phaser, with wilds, Turbo and Auto spin, animated reels and win lines."
                     : "A playable demo slot with its own look. Bets come out of your balance and wins are paid back in."}
                 </p>
               ) : (

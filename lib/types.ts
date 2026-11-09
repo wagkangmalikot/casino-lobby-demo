@@ -7,6 +7,8 @@ export type Game = {
   category: Category;
   rtp: number; // return to player, percent
   minBet: number;
+  volatility: "Low" | "Medium" | "High";
+  maxWin?: number; // multiple of the total bet; slots only
   isNew?: boolean;
   isHot?: boolean;
   engine?: "phaser"; // the featured 5-reel game built with Phaser

@@ -35,7 +35,7 @@ export function GameCard({ game, isFavorite, onOpen, onToggleFavorite }: Props) 
           </span>
         </div>
         <div className="px-3 pb-3 pt-2.5">
-          <p className="truncate font-semibold text-white">{game.name}</p>
+          <p className="line-clamp-2 min-h-10 text-sm font-semibold leading-5 text-white">{game.name}</p>
           <p className="truncate text-xs text-slate-400">{game.provider}</p>
         </div>
       </button>
