@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@theme {
+  --color-night-950: #070b16;
+  --color-night-900: #0d1426;
+  --color-night-800: #151f38;
+  --color-night-700: #1f2b4a;
+  --color-night-600: #2d3b60;
+  --color-gold-300: #fde68a;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f5a524;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter-display), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-night-950);
+  color: #e5e9f2;
+  font-family: var(--font-sans);
+}
+
+::selection { background: #fbbf24; color: #070b16; }
+
+/* Hide scrollbar on the category tab strip but keep it scrollable */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+.shimmer { position: relative; overflow: hidden; }
+.shimmer::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes reel-blur {
+  0% { transform: translateY(0); filter: blur(0); }
+  50% { filter: blur(2px); }
+  100% { transform: translateY(-50%); filter: blur(0); }
+}
+.reel-spinning { animation: reel-blur 0.18s linear infinite; }
+
+@keyframes pop-in {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.pop-in { animation: pop-in 0.35s ease-out both; }
+
+@keyframes slide-up {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.slide-up { animation: slide-up 0.25s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition: none !important; }
+}
