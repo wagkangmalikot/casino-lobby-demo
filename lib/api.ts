@@ -4,6 +4,7 @@
 // The wallet is saved in localStorage so it survives a page refresh.
 
 import { games, providers } from "./games";
+import { evaluateGrid, PAYLINES, randomGrid, type Grid, type LineWin } from "./slot5/engine";
 import type { DepositRequest, DepositResult, Game, GameFilters, SpinResult, ReelSymbol, Wallet } from "./types";
 
 const WALLET_KEY = "bituin-demo-wallet";
@@ -108,6 +109,30 @@ export async function spin(bet: number): Promise<SpinResult> {
   const next = { balance, bonus };
   writeWallet(next);
   return { reels, win, wallet: next };
+}
+
+// --- 5-reel Phaser slot ---------------------------------------------------
+
+export type Spin5Result = { grid: Grid; wins: LineWin[]; win: number; totalBet: number; wallet: Wallet };
+
+export async function spin5(lineBet: number): Promise<Spin5Result> {
+  await wait(250);
+  const totalBet = lineBet * PAYLINES.length;
+  const w = readWallet();
+  if (lineBet <= 0) throw new Error("Choose a bet first.");
+  if (totalBet > w.balance + w.bonus) throw new Error("Not enough balance. Make a deposit to keep playing.");
+
+  const fromBonus = Math.min(w.bonus, totalBet);
+  const bonus = w.bonus - fromBonus;
+  let balance = w.balance - (totalBet - fromBonus);
+
+  const grid = randomGrid();
+  const { wins, total } = evaluateGrid(grid, lineBet);
+  balance += total;
+
+  const next = { balance, bonus };
+  writeWallet(next);
+  return { grid, wins, win: total, totalBet, wallet: next };
 }
 
 export function resetWallet(): Wallet {

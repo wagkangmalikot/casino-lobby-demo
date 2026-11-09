@@ -4,7 +4,7 @@ import type { Game } from "./types";
 export const providers = ["Lantern Studios", "Bagyo Games", "Coral Labs", "Mabuhay Live"];
 
 export const games: Game[] = [
-  { id: "golden-carabao", name: "Golden Carabao", provider: "Lantern Studios", category: "slots", rtp: 96.4, minBet: 5, isHot: true, colors: ["#f59e0b", "#b45309"] },
+  { id: "golden-carabao", name: "Golden Carabao Deluxe", provider: "Lantern Studios", category: "slots", rtp: 95.5, minBet: 10, isHot: true, engine: "phaser", colors: ["#f59e0b", "#b45309"] },
   { id: "jeepney-jackpot", name: "Jeepney Jackpot", provider: "Bagyo Games", category: "slots", rtp: 95.8, minBet: 2, isNew: true, colors: ["#ef4444", "#7c2d12"] },
   { id: "pearl-of-palawan", name: "Pearl of Palawan", provider: "Coral Labs", category: "slots", rtp: 96.9, minBet: 1, colors: ["#06b6d4", "#1e3a8a"] },
   { id: "fiesta-fortune", name: "Fiesta Fortune", provider: "Lantern Studios", category: "slots", rtp: 96.1, minBet: 5, isHot: true, colors: ["#ec4899", "#6b21a8"] },

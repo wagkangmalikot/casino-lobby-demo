@@ -24,6 +24,7 @@ export function GameCard({ game, isFavorite, onOpen, onToggleFavorite }: Props) 
           <div className="absolute left-2 top-2 flex gap-1">
             {game.isNew && <span className="rounded-md bg-sky-400 px-1.5 py-0.5 text-[10px] font-bold uppercase text-night-950">New</span>}
             {game.isHot && <span className="rounded-md bg-rose-500 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">Hot</span>}
+            {game.engine === "phaser" && <span className="rounded-md bg-gold-400 px-1.5 py-0.5 text-[10px] font-bold uppercase text-night-950">5 reels</span>}
           </div>
           <span className="absolute inset-0 grid place-items-center bg-night-950/55 opacity-0 transition group-hover:opacity-100">
             {game.category === "slots" ? (

@@ -113,6 +113,50 @@ includes playable slots. Being upfront about that is better than opening the wro
 
 ---
 
+## 6b. The featured Phaser slot (Golden Carabao Deluxe)
+
+The featured game is a real 5-reel, 3-row, 10-line slot built with **Phaser 3**, the same engine used for
+HTML5 casino games. It's split into three layers, each with one job:
+
+```
+lib/slot5/engine.ts           The rules (pure TypeScript): reel strips, paylines, wilds, paytable
+lib/slot5/createSlotScene.ts  The drawing (Phaser): reels, spin animation, win lines, big-win coins
+components/PhaserSlot.tsx     The glue (React): bet buttons, wallet, API call, starts Phaser
+```
+
+**How one spin works**
+
+1. You press SPIN (or the Space bar). React calls `scene.windUp()` so the reels move immediately.
+2. React calls `useSpin5().mutate(lineBet)`. The API (`spin5()` in `lib/api.ts`) takes 10 × line bet from the wallet,
+   creates a random 5×3 grid, and scores it with `evaluateGrid()` from the engine.
+3. React passes the result to `scene.spinTo(grid, wins, bigWin)`. Phaser animates and returns a Promise.
+4. When the Promise resolves, React shows "You won ₱X" and the list of winning lines.
+
+So **the API decides, Phaser only shows**. You could swap Phaser for plain CSS, or the fake API for a real server,
+without touching the other layers.
+
+**The spin animation.** For each reel, the scene builds a long strip: the result on top, random symbols in the
+middle, and the current symbols at the bottom. It starts the strip so the bottom is visible, then tweens it down
+until the result lands in the window. A mask hides everything outside the reel window. Each reel runs a bit longer
+than the one before (1.0 s, 1.26 s, 1.52 s...), which gives the classic left-to-right stop.
+
+**All art is generated in code.** `makeTextures()` draws each symbol with Phaser Graphics and text, then saves it
+as a texture. There are no image files to load.
+
+**Why Phaser is loaded inside `useEffect`.** Phaser needs `window`, which doesn't exist while Next.js builds the page.
+So `PhaserSlot.tsx` does `await import("phaser")` in the browser only, and `createSlotScene.ts` uses
+`import type` (types disappear at build time). The game is destroyed when the modal closes, so it doesn't leak memory.
+
+**The maths.** Wins pay left to right, as a multiple of the line bet. Wild stands in for every symbol, and a line
+of wilds pays as wilds if that's worth more. Run `npm run simulate` to play a million spins: the long-run payout (RTP)
+is about **95.5%** and about half of all spins win something. Real slots land in the same range, and being able to
+show the number with a script is a strong interview point.
+
+**Likely interview question:** *"How do you know the game pays fairly?"*
+The rules are pure functions in `engine.ts`, and `scripts/simulate-rtp.ts` measures the payout over a million spins.
+
+---
+
 ## 7. Accessibility details
 
 - The modal closes on **Escape** or a backdrop click, locks page scroll, and moves keyboard focus into itself.
@@ -136,6 +180,7 @@ components/
   GameModal.tsx       Game details, launch screen, then the slot
   SlotMachine.tsx     Reels, bet picker, spin logic on the client side
   SlotSymbols.tsx     Three SVG symbol sets and which game uses which
+  PhaserSlot.tsx      React wrapper for the Phaser game: bets, spin button, results
   DepositModal.tsx    Payment method, amount, promo code, summary
   Modal.tsx           Reusable accessible dialog / mobile bottom sheet
   Toast.tsx           Small notification system using React context
@@ -144,6 +189,10 @@ lib/
   queries.ts          React Query hooks used by components
   hooks.ts            useDebounced and useFavorites
   games.ts            The game catalogue (made-up games and studios)
+  slot5/engine.ts     5-reel slot rules: paylines, wilds, paytable
+  slot5/createSlotScene.ts  The Phaser scene that draws and animates the reels
+scripts/
+  simulate-rtp.ts     Plays a million spins and prints the payout (npm run simulate)
   types.ts            TypeScript types shared everywhere
   format.ts           Peso formatting
 ```

@@ -4,7 +4,7 @@
 // so caching, loading states and refetching are handled in one place.
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { deposit, fetchGames, fetchProviders, fetchWallet, spin } from "./api";
+import { deposit, fetchGames, fetchProviders, fetchWallet, spin, spin5 } from "./api";
 import type { DepositRequest, GameFilters, Wallet } from "./types";
 
 export const queryKeys = {
@@ -44,6 +44,14 @@ export function useSpin() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (bet: number) => spin(bet),
+    onSuccess: (res) => qc.setQueryData<Wallet>(queryKeys.wallet, res.wallet),
+  });
+}
+
+export function useSpin5() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (lineBet: number) => spin5(lineBet),
     onSuccess: (res) => qc.setQueryData<Wallet>(queryKeys.wallet, res.wallet),
   });
 }

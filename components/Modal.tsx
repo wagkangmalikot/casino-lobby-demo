@@ -10,12 +10,14 @@ export function Modal({
   title,
   children,
   wide = false,
+  extraWide = false,
 }: {
   open: boolean;
   onClose: () => void;
   title: string;
   children: React.ReactNode;
   wide?: boolean;
+  extraWide?: boolean;
 }) {
   const panel = useRef<HTMLDivElement>(null);
 
@@ -43,7 +45,7 @@ export function Modal({
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
-        className={`slide-up relative max-h-[92vh] w-full overflow-y-auto rounded-t-3xl bg-night-900 shadow-2xl ring-1 ring-white/10 outline-none sm:rounded-3xl ${wide ? "sm:max-w-3xl" : "sm:max-w-md"}`}
+        className={`slide-up relative max-h-[92vh] w-full overflow-y-auto rounded-t-3xl bg-night-900 shadow-2xl ring-1 ring-white/10 outline-none sm:rounded-3xl ${extraWide ? "sm:max-w-5xl" : wide ? "sm:max-w-3xl" : "sm:max-w-md"}`}
       >
         <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/5 bg-night-900/95 px-5 py-4 backdrop-blur">
           <h2 className="font-display text-lg font-bold text-white">{title}</h2>

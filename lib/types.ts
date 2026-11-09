@@ -9,6 +9,7 @@ export type Game = {
   minBet: number;
   isNew?: boolean;
   isHot?: boolean;
+  engine?: "phaser"; // the featured 5-reel game built with Phaser
   colors: [string, string]; // gradient for the generated tile art
 };
 

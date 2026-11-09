@@ -6,6 +6,7 @@ import { categoryLabels } from "@/lib/games";
 import type { Game } from "@/lib/types";
 import { GameArt } from "./GameArt";
 import { Modal } from "./Modal";
+import { PhaserSlot } from "./PhaserSlot";
 import { SlotMachine } from "./SlotMachine";
 
 export function GameModal({ game, onClose }: { game: Game | null; onClose: () => void }) {
@@ -31,10 +32,10 @@ export function GameModal({ game, onClose }: { game: Game | null; onClose: () =>
   const playable = game.category === "slots";
 
   return (
-    <Modal open={!!game} onClose={close} title={game.name} wide>
+    <Modal open={!!game} onClose={close} title={game.name} wide extraWide={playing && game.engine === "phaser"}>
       <div className="p-5">
         {playing ? (
-          <SlotMachine game={game} />
+          game.engine === "phaser" ? <PhaserSlot /> : <SlotMachine game={game} />
         ) : (
           <div className="grid gap-5 sm:grid-cols-[1.1fr_1fr]">
             <div className="relative overflow-hidden rounded-2xl">
@@ -64,7 +65,9 @@ export function GameModal({ game, onClose }: { game: Game | null; onClose: () =>
               </dl>
               {playable ? (
                 <p className="mt-4 text-sm leading-relaxed text-slate-300">
-                  A playable demo slot with its own look. Bets come out of your balance and wins are paid back in.
+                  {game.engine === "phaser"
+                    ? "The featured game: a 5-reel, 10-line slot built with Phaser, with wilds, animated reels and win lines."
+                    : "A playable demo slot with its own look. Bets come out of your balance and wins are paid back in."}
                 </p>
               ) : (
                 <p className="mt-4 rounded-xl bg-white/5 p-3 text-sm leading-relaxed text-slate-300 ring-1 ring-white/10">
