@@ -136,9 +136,17 @@ So **the API decides, Phaser only shows**. You could swap Phaser for plain CSS, 
 without touching the other layers.
 
 **The spin animation.** For each reel, the scene builds a long strip: the result on top, random symbols in the
-middle, and the current symbols at the bottom. It starts the strip so the bottom is visible, then tweens it down
-until the result lands in the window. A mask hides everything outside the reel window. Each reel runs a bit longer
-than the one before (1.0 s, 1.26 s, 1.52 s...), which gives the classic left-to-right stop.
+middle, and the current symbols at the bottom. It starts the strip so the bottom is visible, then moves it down
+until the result lands in the window. A mask hides everything outside the reel window.
+
+The movement has two phases. First the reel moves at a **constant speed** (a linear tween), so symbols move the same
+distance every frame. Then a short `Quad.easeOut` tween slows it to a stop over the last three symbols. Its duration is
+chosen so it starts at exactly the same speed, so there's no visible jump between the phases. Every reel uses the same
+speed; later reels just get a longer strip, so they stop later and you get the left-to-right stop.
+
+Before spinning, `this.tweens.killTweensOf(container)` stops the little wind-up bounce. Without it, the wind-up and the
+spin would fight over the same `y` value and the reel would stutter. That was a real bug on the 5th reel, which starts
+its wind-up last. **Two tweens on the same property** is a classic Phaser mistake and a good debugging story for an interview.
 
 **All art is generated in code.** `makeTextures()` draws each symbol with Phaser Graphics and text, then saves it
 as a texture. There are no image files to load.

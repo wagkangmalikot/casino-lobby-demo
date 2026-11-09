@@ -81,24 +81,50 @@ export function createSlotScene(Phaser: PhaserLib, onReady: (api: SlotSceneApi) 
     spinTo(grid: Grid, wins: LineWin[], bigWin: boolean): Promise<void> {
       this.clearWins();
       const stops = this.reels.map((container, r) => {
+        // Stop the wind-up bounce first. If it were still running, two tweens would
+        // fight over the same `y` and the reel would stutter (most visible on reel 5,
+        // whose wind-up starts last).
+        this.tweens.killTweensOf(container);
+
+        // Every reel moves at the same steady speed; later reels just travel further,
+        // so they stop later. Speed is in pixels per millisecond.
+        const SPEED = 2.6;
+        const SLOW_CELLS = 3; // the last 3 symbols are used to slow down smoothly
+        const runMs = 700 + r * 260; // time at full speed before slowing down
+        const fillerCount = Math.max(4, Math.round((SPEED * runMs) / CELL_H));
+
         // Build a strip: the result on top, random symbols in the middle, the current symbols at the bottom.
         // Start showing the bottom, then slide the strip down so the result lands in view.
-        const filler = Array.from({ length: 16 + r * 5 }, () => randomSymbol());
+        const filler = Array.from({ length: fillerCount }, () => randomSymbol());
         const strip = [...grid[r], ...filler, ...this.current[r]];
         this.fill(container, strip);
-        container.y = AREA_Y - (strip.length - ROWS) * CELL_H;
+        const startY = AREA_Y - (strip.length - ROWS) * CELL_H;
+        const slowDistance = SLOW_CELLS * CELL_H;
+        const fastDistance = AREA_Y - slowDistance - startY;
+        container.y = startY;
 
         return new Promise<void>((resolve) => {
+          // Phase 1: constant speed (linear), so symbols move the same distance every frame.
           this.tweens.add({
             targets: container,
-            y: AREA_Y,
-            duration: 1000 + r * 260,
-            ease: "Cubic.easeOut",
+            y: startY + fastDistance,
+            duration: fastDistance / SPEED,
+            ease: "Linear",
             onComplete: () => {
-              // Tiny bounce as the reel locks in.
-              this.tweens.add({ targets: container, y: AREA_Y + 10, duration: 70, yoyo: true, ease: "Sine.easeOut" });
-              this.fill(container, grid[r]);
-              resolve();
+              // Phase 2: slow down. Quad.easeOut starts at twice its average speed,
+              // so a duration of 2 × distance / speed hands over from phase 1 without a jump.
+              this.tweens.add({
+                targets: container,
+                y: AREA_Y,
+                duration: (2 * slowDistance) / SPEED,
+                ease: "Quad.easeOut",
+                onComplete: () => {
+                  // Tiny bounce as the reel locks in.
+                  this.fill(container, grid[r]);
+                  this.tweens.add({ targets: container, y: AREA_Y + 10, duration: 70, yoyo: true, ease: "Sine.easeOut" });
+                  resolve();
+                },
+              });
             },
           });
         });
