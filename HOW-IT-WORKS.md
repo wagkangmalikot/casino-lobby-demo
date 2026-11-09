@@ -200,7 +200,7 @@ app/
 components/
   Header.tsx          Logo, live balance, Deposit button
   GameCard.tsx        One game tile + its loading skeleton
-  GameArt.tsx         Generated tile art (no image files needed)
+  GameArt.tsx         Card image: the game's screenshot if it has one, otherwise generated tile art
   GameModal.tsx       Game details, launch screen, then the slot
   SlotMachine.tsx     Reels, bet picker, spin logic on the client side
   SlotSymbols.tsx     Three SVG symbol sets and which game uses which
@@ -215,6 +215,7 @@ lib/
   games.ts            The game catalogue (made-up games and studios)
   slot5/engine.ts     5-reel slot rules: paylines, wilds, paytable
   slot5/createSlotScene.ts  The Phaser scene that draws and animates the reels
+public/thumbs/        Screenshots of each playable slot, used as card images (800×600 WebP)
 scripts/
   simulate-rtp.ts     Plays a million spins and prints the payout (npm run simulate)
   types.ts            TypeScript types shared everywhere

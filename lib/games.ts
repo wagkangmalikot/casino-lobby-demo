@@ -14,7 +14,7 @@ export const providerTaglines: Record<string, string> = {
 
 // The simple demo slots pay up to 25× the bet (three sevens); the featured Phaser slot up to 1,300×
 // (five wilds on all 10 lines).
-export const games: Game[] = [
+const catalogue: Game[] = [
   { id: "golden-ox", name: "Golden Ox Deluxe", provider: "AstraSpin Originals", category: "slots", rtp: 95.8, minBet: 10, volatility: "High", maxWin: 1300, isHot: true, engine: "phaser", colors: ["#f59e0b", "#b45309"] },
   { id: "jackpot-express", name: "Jackpot Express", provider: "Reelforge Studios", category: "slots", rtp: 95.8, minBet: 5, volatility: "Medium", maxWin: 25, isNew: true, colors: ["#ef4444", "#7c2d12"] },
   { id: "pearl-lagoon", name: "Pearl Lagoon Riches", provider: "Fortune Tide Gaming", category: "slots", rtp: 96.9, minBet: 5, volatility: "Low", maxWin: 25, colors: ["#06b6d4", "#1e3a8a"] },
@@ -43,6 +43,10 @@ export const games: Game[] = [
   { id: "reef-raiders", name: "Reef Raiders", provider: "Fortune Tide Gaming", category: "fishing", rtp: 96.4, minBet: 2, volatility: "Medium", isNew: true, colors: ["#22d3ee", "#312e81"] },
   { id: "dragon-fishing", name: "Dragon Tide Fishing", provider: "Lantern Gaming", category: "fishing", rtp: 95.9, minBet: 2, volatility: "High", colors: ["#f43f5e", "#0c0a09"] },
 ];
+
+// Playable games use a real screenshot as their card image (public/thumbs/<id>.webp).
+// Games that aren't playable yet keep the generated tile art.
+export const games: Game[] = catalogue.map((g) => (g.category === "slots" ? { ...g, thumb: `/thumbs/${g.id}.webp` } : g));
 
 export const categoryLabels: Record<string, string> = {
   all: "All games",

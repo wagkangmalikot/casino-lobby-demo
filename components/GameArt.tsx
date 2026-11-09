@@ -1,7 +1,24 @@
+import Image from "next/image";
 import type { Game } from "@/lib/types";
 
 // Generated tile art: a gradient, a pattern based on the category, and the game's initials.
-export function GameArt({ game, className = "" }: { game: Game; className?: string }) {
+export function GameArt({ game, className = "", priority = false }: { game: Game; className?: string; priority?: boolean }) {
+  if (game.thumb) {
+    return (
+      <div className={`relative overflow-hidden bg-night-900 ${className}`}>
+        <Image
+          src={game.thumb}
+          alt={`${game.name} screenshot`}
+          fill
+          sizes="(min-width: 1280px) 16vw, (min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+          className="object-cover transition duration-300 group-hover:scale-105"
+          priority={priority}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" aria-hidden="true" />
+      </div>
+    );
+  }
+
   const [a, b] = game.colors;
   const initials = game.name
     .split(/\s+/)

@@ -12,6 +12,7 @@ export type Game = {
   isNew?: boolean;
   isHot?: boolean;
   engine?: "phaser"; // the featured 5-reel game built with Phaser
+  thumb?: string; // screenshot used as the card image (playable games only)
   colors: [string, string]; // gradient for the generated tile art
 };
 

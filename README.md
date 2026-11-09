@@ -10,6 +10,7 @@ Built with **Next.js 16, React 19, TypeScript, React Query, Phaser and Tailwind 
 
 - Game lobby with category tabs, debounced search, a Studios row, provider filter and favorites
 - Original casino-style games and studios with RTP, volatility and max win
+- Real gameplay screenshots as thumbnails for every playable slot
 - Skeleton loading, empty and error states
 - Live wallet balance (real + bonus) in the header
 - Deposit modal: payment methods, amount presets, validation, promo codes with live bonus preview
